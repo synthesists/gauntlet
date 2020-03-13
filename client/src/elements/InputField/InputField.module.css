@@ -1,0 +1,29 @@
+.InputFieldWrapper input {
+  display: block;
+  margin-top: .5rem;
+  padding: 0;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  line-height: normal;
+  font-size: 1.875rem;
+  color: #333333;
+  border: none;
+  border-bottom: 2px solid #d6d6d6;
+}
+.InputFieldWrapper input::placeholder {
+  color: #adadad;
+  opacity: 1;
+  line-height:normal !important;
+}
+.InputFieldWrapper input:focus,
+.InputFieldWrapper input:active {
+  outline: none;
+}
+.InputFieldWrapper label {
+  text-align: center;
+  color: #606060;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: +.5px;
+}
