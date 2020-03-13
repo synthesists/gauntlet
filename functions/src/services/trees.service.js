@@ -27,4 +27,4 @@ const tree = (rounds) => {
     return treesObj
 
 }
-module.exports = tree;
+module.exports = {tree};
