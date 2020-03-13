@@ -1,8 +1,8 @@
-const port = 4200;
+const port = 400;
 
 const origins = {
 //   cloud: 'https://reunite.eu-gb.cf.appdomain.cloud',
-  local: `localhost:${port}/api/v1`,
+  local: `http://localhost:${port}/api/v1`,
 //   'local-network': `http://169.254.XXX.XX:${port}`, // Set this to your Private IP address
 };
 
