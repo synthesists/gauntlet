@@ -3,6 +3,6 @@ const treesController = require('../controllers/trees.controller');
 const router = express.Router();
 
 router.route('/')
-    .get(treesController.tree(round));
+    .get(treesController.getTree);
 
 module.exports = router
