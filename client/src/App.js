@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import classes from './App.module.css';
 
-import Venues from './components/Venues';
-import { getVenues } from './utils/apiRequests';
+import Setup from './containers/Setup/Setup';
+import Header from './components/Header';
+import Game from './containers/Game/Game';
 
 export default () => {
-  const [venues, setVenues] = useState([]);
-  useEffect(() => {
-    const callVenues = async () => {
-      const { data } = await getVenues();
-      setVenues(data.venues);
-    }
-    callVenues();
-  }, []);
-
+  const [playerNames, setPlayerNames] = useState([]);
+  const [numberOfRounds, setNumberOfRounds] = useState(0);
+  const handlePress = (names, rounds) => {
+    setPlayerNames(names);
+    setNumberOfRounds(rounds);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Venues venues={venues} />
-      </header>
+    <div className={classes.AppWrapper}>
+      <Header />
+
+      <main className={classes.AppMain}>
+        {playerNames.length === 0 ? <Setup handlePress={handlePress} /> : null}
+        {playerNames.length > 0 ? <Game playerNames={playerNames} numberOfRounds={numberOfRounds} /> : null}
+        
+       
+      </main>
     </div>
   );
-};
+}
