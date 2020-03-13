@@ -1,8 +1,8 @@
 const express = require('express');
-const pubsController = require('../controllers/pubs.controller');
+const venuesController = require('../controllers/venues.controller');
 const router = express.Router();
 
 router.route('/')
-    .get(pubsController.getPubs);
+    .get(venuesController.getVenues);
 
 module.exports = router
