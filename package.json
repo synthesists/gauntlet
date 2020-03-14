@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd functions && npm start\" \"cd client && npm start\"",
+    "build": "cd client && npm run build",
+    "start": "concurrently \"npm run start:functions\" \"cd client && npm run start\"",
+    "serve": "firebase serve",
+    "deploy": "firebase deploy",
     "test": "jest"
   },
   "repository": {
