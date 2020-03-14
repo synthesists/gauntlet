@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "cd client && npm run build",
+    "start:functions": "firebase serve --only functions",
     "start": "concurrently \"npm run start:functions\" \"cd client && npm run start\"",
     "serve": "firebase serve",
     "deploy": "firebase deploy",

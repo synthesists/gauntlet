@@ -15,7 +15,8 @@ export default ({ playerNames, numberOfRounds }) => {
       playersData.push({ name, currentNode: 'start', nodeHistory: [], drinkHistory: [] });
     });
     const foo = async () => {
-      const { data } = await getTree(parseInt(numberOfRounds));
+      const { data } = await getTree(parseInt(numberOfRounds), 670);
+      console.log(data)
       setTree(data)
     }
     foo();
@@ -31,6 +32,9 @@ export default ({ playerNames, numberOfRounds }) => {
   }
 
   if (round >= numberOfRounds) return <h1>FINISHED</h1>
+  
+  if (tree) console.log(tree['0-0']);
+  
   return (
     <div>
       <h1>{`Round: ${round+1} / ${numberOfRounds}`}</h1>
@@ -42,7 +46,8 @@ export default ({ playerNames, numberOfRounds }) => {
             playersData[currentPlayer].currentNode = child
             handleClick();
           }}
-          name={child} />) 
+          name={tree[child].drink.displayName} />
+        ) 
         : null
       }
     </div>
