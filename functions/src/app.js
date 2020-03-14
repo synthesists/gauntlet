@@ -11,6 +11,8 @@ app.use(bodyParser.json())
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-app.use('/api/v1', routes)
+app.use('/v1', routes)
 
-app.listen(port, () => console.log(`Listening on port ${port}!`))
+
+module.exports = app
+// app.listen(port, () => console.log(`Listening on port ${port}!`))

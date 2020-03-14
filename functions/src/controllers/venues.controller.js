@@ -5,7 +5,7 @@ const getVenues = async function (req, res) {
         const venues = await venuesService.getVenues();
         res.status(200).send(venues);
     } catch(err) {
-        res.status(err.statuscode).send(err.message);
+        res.send(err.message);
     }
 };
 
