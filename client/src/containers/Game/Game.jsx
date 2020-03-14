@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../elements/Button/Button';
+import Option from '../../components/Option/Option';
 import { getTree } from '../../utils/apiRequests';
 
 const playersData = [];
@@ -30,15 +31,20 @@ export default ({ playerNames, numberOfRounds }) => {
   }
 
   if (round >= numberOfRounds) return <h1>FINISHED</h1>
-  console.log(tree);
-  
   return (
     <div>
       <h1>{`Round: ${round+1} / ${numberOfRounds}`}</h1>
       <h1>{`${playerNames[currentPlayer]}'s turn`}</h1>
       <h1>{`Options: `}</h1>
-      { tree ? tree[playersData[currentPlayer].currentNode].children.join('\n') : null}
-      <Button label="Done" clicked={handleClick} />
+      { tree
+        ? tree[playersData[currentPlayer].currentNode].children.map((child, i) => <Option
+          handlePress={() => {
+            playersData[currentPlayer].currentNode = child
+            handleClick();
+          }}
+          name={child} />) 
+        : null
+      }
     </div>
   )
 
