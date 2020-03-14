@@ -1,15 +1,18 @@
-const tree = require('./trees.service');
+const { tree } = require('./trees.service');
 
 test('tree of depth 1', () => {
     expect(tree(1)).toStrictEqual({
-        '0-0': { children: [] },
-        '0-1': { children: [] },
-        '0-2': { children: [] },
+        'start': { children: ['0-0', '0-1', '0-2'] },
+        '0-0': { children: ['end'] },
+        '0-1': { children: ['end'] },
+        '0-2': { children: ['end'] },
+        'end': { children: [] },
     });
 });
 
 test('tree of depth 3', () => {
     expect(tree(3)).toStrictEqual({
+        'start': { children: ['0-0', '0-1', '0-2'] },
         '0-0': { children: ['1-0', '1-1'] },
         '0-1': { children: ['1-1', '1-2'] },
         '0-2': { children: ['1-2', '1-3'] },
@@ -17,15 +20,17 @@ test('tree of depth 3', () => {
         '1-1': { children: ['2-0', '2-1'] },
         '1-2': { children: ['2-1', '2-2'] },
         '1-3': { children: ['2-2', '2-0'] },
-        '2-0': { children: [] },
-        '2-1': { children: [] },
-        '2-2': { children: [] },
+        '2-0': { children: ['end'] },
+        '2-1': { children: ['end'] },
+        '2-2': { children: ['end'] },
+        'end': { children: [] },
     });
 
 });
 
 test('tree of depth 5', () => {
     expect(tree(5)).toStrictEqual({
+        'start': { children: ['0-0', '0-1', '0-2'] },
         '0-0': { children: ['1-0', '1-1'] },
         '0-1': { children: ['1-1', '1-2'] },
         '0-2': { children: ['1-2', '1-3'] },
@@ -42,9 +47,10 @@ test('tree of depth 5', () => {
         '3-1': { children: ['4-0','4-1'] },
         '3-2': { children: ['4-1','4-2'] },
         '3-3': { children: ['4-2','4-0'] },
-        '4-0': { children: [] },
-        '4-1': { children: [] },
-        '4-2': { children: [] },
+        '4-0': { children: ['end'] },
+        '4-1': { children: ['end'] },
+        '4-2': { children: ['end'] },
+        'end': { children: [] },
 
     });
 });
