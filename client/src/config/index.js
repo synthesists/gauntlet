@@ -7,7 +7,7 @@ const origins = {
 //   'local-network': `http://169.254.XXX.XX:${port}`, // Set this to your Private IP address
 };
 
-const serverLocation = process.env.REACT_APP_SERVER_LOCATION || 'local';
+const serverLocation = process.env.REACT_APP_SERVER_LOCATION || 'cloud';
 
 const origin = origins[serverLocation];
 
