@@ -19,35 +19,29 @@ const process = async (obj, r, rounds, venueId) => {
 const tree = async (rounds, venueId) => {
     let currentRow = [{ x: 0, y: 0}, { x: 1, y: 0}, { x: 2, y: 0}];
     const treesObj = { start: { children: currentRow.map(child => toString(child)) }, end: { children: [] } };
+    const allDrinks = await getDrinks(venueId);
     for(let r = 1; r < rounds; r++ ) {
       let nextRow = [];
 
-      const processedNodes = await Promise.all(currentRow.map(node => process(node, r, rounds, venueId)));
+      currentRow.forEach((node) => {
+        const children = isHalfWay(r, rounds) ? getChildren2(node, rounds) : getChildren1(node);
+        nextRow = nextRow.concat(children);
 
-      processedNodes.forEach(({ children, drink, obj }) => {
-        nextRow = nextRow.concat(children)
-        treesObj[toString(obj)] = { 
+        const drink = allDrinks[Math.floor(Math.random() * allDrinks.length)];
+        treesObj[toString(node)] = { 
           children: children.map(child => toString(child)), 
-          drink
+          drink,
         };
-      })
-      // currentRow.forEach( async ({x, y}) => {
-      //     const children = isHalfWay(r, rounds) ? getChildren2({x, y}, rounds) : getChildren1({x, y});
-      //     nextRow = nextRow.concat(children)
-      //     const drink = await getRandomDrink(venueId)
-      //     treesObj[toString({x, y})] = { 
-      //       children: children.map(child => toString(child)), 
-      //       drink
-      //     };
-      // });
+      });
       currentRow = nextRow;
     }
 
-    const randomDrinks = await Promise.all([0, 0, 0].map(() => getRandomDrink(venueId)))
     for(let x = 0; x < 3; x++) {
-      treesObj[toString({x,y:rounds - 1})] = { children: ['end'], drink: randomDrinks[x] };
+      treesObj[toString({x,y:rounds - 1})] = {
+        children: ['end'],
+        drink: allDrinks[Math.floor(Math.random() * allDrinks.length)],
+      };
     }
     return treesObj
-
 }
 module.exports = {tree};
