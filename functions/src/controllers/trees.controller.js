@@ -9,7 +9,7 @@ const getTree = async (req, res) => {
     } catch(err) {
         console.log(err);
         
-        res.status(err.statuscode).send(err.message);
+        res.send(err.message);
     }
 };
 
