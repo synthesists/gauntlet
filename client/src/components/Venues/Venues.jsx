@@ -12,7 +12,7 @@ let numberOfRounds = 1;
 
 export default ({ venues, handlePress: handleSubmit }) => {
   const [numberOfPlayers, setNumberOfPlayers] = useState(1);
-  useEffect(() => { 
+  useEffect(() => {
     if (venues.length > 0) {
       venueName = venues[0].name;
     }
@@ -37,7 +37,7 @@ export default ({ venues, handlePress: handleSubmit }) => {
   const handlePlayersChange = (e) => {
     setNumberOfPlayers(e.target.value);
   }
-  
+
   const handlePlayerNameChange = (e, n) => {
     playerNames[n] = e.target.value
   }
@@ -51,7 +51,7 @@ export default ({ venues, handlePress: handleSubmit }) => {
       <Dropdown id="venues" onChange={handleVenueChange} label="Choose Venue: " options={venues.map(({ name }) => name).sort()}/>
       <Dropdown id="rounds" onChange={handleRoundsChange} label="Number of rounds: " options={[1, 3, 5, 7, 9]}/>
       <Dropdown id="players" onChange={handlePlayersChange} label="Number of Players: " options={[1, 2, 3, 4, 5]}/>
-      {playerNames.map((_, i) => <InputField handleChange={(e) => handlePlayerNameChange(e, i)}label={`Player ${i+1}: `}/>)}
+      {playerNames.map((_, i) => <InputField key={i} handleChange={(e) => handlePlayerNameChange(e, i)}label={`Player ${i+1}: `}/>)}
       <Button label="Submit" clicked={handlePress} />
     </main>
   );

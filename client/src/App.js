@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 // import './App.css';
 import classes from './App.module.css';
 
@@ -21,8 +20,6 @@ export default () => {
       <main className={classes.AppMain}>
         {playerNames.length === 0 ? <Setup handlePress={handlePress} /> : null}
         {playerNames.length > 0 ? <Game playerNames={playerNames} numberOfRounds={numberOfRounds} /> : null}
-        
-       
       </main>
     </div>
   );
