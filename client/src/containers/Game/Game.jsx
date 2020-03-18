@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../../elements/Button/Button';
 import Option from '../../components/Option/Option';
 import { getTree } from '../../utils/apiRequests';
 
@@ -9,7 +8,7 @@ export default ({ playerNames, numberOfRounds }) => {
   const [currentPlayer, setCurrentPlayer] = useState(0);
   const [round, setRound] = useState(0);
   const [tree, setTree] = useState();
-  
+
   useEffect(() => {
     playerNames.forEach(name => {
       playersData.push({ name, currentNode: 'start', nodeHistory: [], drinkHistory: [] });
@@ -20,7 +19,7 @@ export default ({ playerNames, numberOfRounds }) => {
       setTree(data)
     }
     foo();
-  }, [numberOfRounds]);
+  }, [numberOfRounds, playerNames]);
 
   const handleClick = () => {
     if (currentPlayer === playersData.length - 1) {
@@ -32,9 +31,9 @@ export default ({ playerNames, numberOfRounds }) => {
   }
 
   if (round >= numberOfRounds) return <h1>FINISHED</h1>
-  
+
   if (tree) console.log(tree['0-0']);
-  
+
   return (
     <div>
       <h1>{`Round: ${round+1} / ${numberOfRounds}`}</h1>
@@ -47,7 +46,7 @@ export default ({ playerNames, numberOfRounds }) => {
             handleClick();
           }}
           name={tree[child].drink.displayName} />
-        ) 
+        )
         : null
       }
     </div>
