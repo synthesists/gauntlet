@@ -1,21 +1,23 @@
 .ButtonWrapper button {
-  padding: 0;
-  color: #a0a0a0;
+  background-color: rgb(56, 53, 255);
+  border-color: #ffffff;
+  color: #ffffff;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin: 10px;
+  border-radius: 25px;
+}
+.ButtonWrapper h1 {
+  padding: 0px;
   font-size: 1rem;
-  letter-spacing: +.5px;
   text-transform: uppercase;
-  border: none;
-  background: none;
 }
 .ButtonWrapper button:hover {
+  background-color: rgb(110, 108, 255);
   cursor: pointer;
 }
+
 .ButtonWrapper button:active,
 .ButtonWrapper button:focus {
   outline: none;
-}
-.FormButtonWrapper {
-  position: absolute;
-  top: 2rem;
-  right: 0;
 }

@@ -1,0 +1,24 @@
+.DropdownWrapper select {
+  border-color: #ffffff;
+  width: 100%;
+  margin: 0px;
+  text-align: center;
+}
+.DropdownWrapper h1 {
+  padding: 0px;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.DropdownWrapper button:hover {
+  background-color: rgb(44, 41, 255);
+  cursor: pointer;
+}
+
+.DropdownWrapper button:active,
+.DropdownWrapper button:focus {
+  outline: none;
+}
+
+.DropdownWrapper label {
+  color: #606060;
+}

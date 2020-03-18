@@ -16,15 +16,13 @@ export default ({ venues, handlePress: handleSubmit }) => {
     if (venues.length > 0) {
       venueName = venues[0].name;
     }
-  }, [venues.length]);
+  }, [venues]);
 
-  if (playerNames.length !== numberOfPlayers) {
-    while (playerNames.length < numberOfPlayers) {
-      playerNames.push("");
-    }
-    while (playerNames.length > numberOfPlayers) {
-      playerNames.pop();
-    }
+  while (playerNames.length < numberOfPlayers) {
+    playerNames.push("");
+  }
+  while (playerNames.length > numberOfPlayers) {
+    playerNames.pop();
   }
 
   const handleVenueChange = (e) => {
@@ -43,7 +41,7 @@ export default ({ venues, handlePress: handleSubmit }) => {
   }
 
   const handlePress = () => {
-    handleSubmit(playerNames, numberOfRounds);
+    handleSubmit(playerNames, numberOfRounds, venueName);
   }
 
   return(
@@ -52,7 +50,7 @@ export default ({ venues, handlePress: handleSubmit }) => {
       <Dropdown id="rounds" onChange={handleRoundsChange} label="Number of rounds: " options={[1, 3, 5, 7, 9]}/>
       <Dropdown id="players" onChange={handlePlayersChange} label="Number of Players: " options={[1, 2, 3, 4, 5]}/>
       {playerNames.map((_, i) => <InputField key={i} handleChange={(e) => handlePlayerNameChange(e, i)}label={`Player ${i+1}: `}/>)}
-      <Button label="Submit" clicked={handlePress} />
+      <Button onClick={handlePress} name="submit"> <h1>Submit</h1></Button>
     </main>
   );
 }
