@@ -30,6 +30,9 @@ rules:
     - error
     - always
   no-console: 0
+  no-plusplus:
+    - error
+    - allowForLoopAfterthoughts: true
   no-use-before-define:
     - error
     - functions: false
