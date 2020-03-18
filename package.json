@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "(cd client && npm install) && (cd functions && npm install)",
     "build": "cd client && npm run build",
-    "start:functions": "firebase serve --only functions",
-    "start": "concurrently \"npm run start:functions\" \"cd client && npm run start\"",
+    "start:functions": "firebase functions:config:set gauntlet.env=\"development\" && firebase serve --only functions",
+    "start": "concurrently \"npm run start:functions\" \"cd client && npm start\"",
+    "start:dev": "REACT_APP_SERVER_LOCATION=local concurrently \"(cd functions && npm run start:dev)\" \"cd client && npm start\"",
     "serve": "firebase serve",
     "deploy": "firebase deploy",
     "test": "jest"

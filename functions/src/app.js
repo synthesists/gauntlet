@@ -13,6 +13,8 @@ app.get('/', (req, res) => res.send('Hello World!'));
 
 app.use('/v1', routes)
 
+if (process.env.REACT_APP_SERVER_LOCATION === 'local') {
+    app.listen(port, () => console.log(`Listening on port ${port}!`))
+}
 
-module.exports = app
-// app.listen(port, () => console.log(`Listening on port ${port}!`))
+module.exports = app;
