@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import SetupGame from './SetupGame';
 import PlayerChoice from './PlayerChoice';
+import Party from './Party';
 import { getTree } from '../../utils/apiRequests';
 
 const GAME_STATES = {
@@ -36,6 +37,12 @@ const Game = ({ venue }) => {
   if (currentRound >= numberOfRounds && gameState !== GAME_STATES.END) {
     setGameState(GAME_STATES.END);
   }
+
+  const onNextRound = () => {
+    setCurrentPlayerIndex(0);
+    setCurrentRound(currentRound + 1);
+    setGameState(GAME_STATES.PLAYER_CHOICE);
+  };
   
   switch (gameState) {
     case GAME_STATES.SETUP:
@@ -55,8 +62,7 @@ const Game = ({ venue }) => {
         newPlayer.nodesVisited.push(nodeVisited);
         setPlayers(newPlayers);
         if (currentPlayerIndex === players.length - 1) {
-          setCurrentPlayerIndex(0);
-          setCurrentRound(currentRound + 1);
+          setGameState(GAME_STATES.PARTY)
         } else {
           setCurrentPlayerIndex(currentPlayerIndex + 1);
         }
@@ -69,8 +75,15 @@ const Game = ({ venue }) => {
         options={options}
         onChoice={onPlayerChoice}
       />
+    case GAME_STATES.PARTY:
+      return <Party
+        players={players}
+        currentRound={currentRound}
+        numberOfRounds={numberOfRounds}
+        onNextRound={onNextRound}
+      />;
     case GAME_STATES.END:
-      return (<h1>FINISHED</h1>  )
+      return (<h1>FINISHED</h1>);
     default:
       break;
   }
