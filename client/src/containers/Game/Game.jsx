@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 import SetupGame from './SetupGame';
 import PlayerChoice from './PlayerChoice';
 import { getTree } from '../../utils/apiRequests';
@@ -19,27 +20,18 @@ const Game = ({ venue }) => {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [currentRound, setCurrentRound] = useState(0);
 
-  const getTreeFromServer = async () => {
-    const { data } = await getTree(numberOfRounds, venue.id);
+  const getTreeFromServer = async (numRounds) => {
+    const { data } = await getTree(numRounds, venue.id);
     console.log(data)
     setTree(data)
   }
     
   const onStart = async(chosenPlayers, chosenNumberOfRounds) => {
-    await getTreeFromServer();
+    await getTreeFromServer(chosenNumberOfRounds);
     setPlayers(chosenPlayers);
     setNumberOfRounds(chosenNumberOfRounds);
     setGameState(GAME_STATES.PLAYER_CHOICE);
   };
-
-  const onChoice = (player, option) => {
-    if (currentPlayerIndex === players.length - 1) {
-      setCurrentPlayerIndex(0);
-      setCurrentRound(currentRound + 1);
-    } else {
-      setCurrentPlayerIndex(currentPlayerIndex + 1);
-    }
-  }
   
   if (currentRound >= numberOfRounds && gameState !== GAME_STATES.END) {
     setGameState(GAME_STATES.END);
@@ -51,13 +43,31 @@ const Game = ({ venue }) => {
     case GAME_STATES.PLAYER_CHOICE:
       const currentPlayer = players[currentPlayerIndex];
       const currentNode = currentPlayer.nodesVisited[currentPlayer.nodesVisited.length - 1];
-      const options = tree[currentNode].children.map(child => tree[child]);
+      const currentChildren = tree[currentNode].children;
+      const options = currentChildren.map(child => tree[child]);
+      
+      const onPlayerChoice = (player, optionIndex) => {
+        const nodeVisited = currentChildren[optionIndex];
+        console.log('nodeVisited');
+        console.log(nodeVisited);
+        const newPlayers = cloneDeep(players);
+        const newPlayer = newPlayers[currentPlayerIndex];
+        newPlayer.nodesVisited.push(nodeVisited);
+        setPlayers(newPlayers);
+        if (currentPlayerIndex === players.length - 1) {
+          setCurrentPlayerIndex(0);
+          setCurrentRound(currentRound + 1);
+        } else {
+          setCurrentPlayerIndex(currentPlayerIndex + 1);
+        }
+      };
+      
       return <PlayerChoice
         player={currentPlayer}
         currentRound={currentRound}
         numberOfRounds={numberOfRounds}
         options={options}
-        onChoice={onChoice}
+        onChoice={onPlayerChoice}
       />
     case GAME_STATES.END:
       return (<h1>FINISHED</h1>  )

@@ -10,10 +10,10 @@ export default ({ player, currentRound, numberOfRounds, options, onChoice }) => 
       <h1>{`${player.name}'s turn`}</h1>
       <h1>{`Options: `}</h1>
       
-      {options.map(option => (
+      {options.map((option, i) => (
           <Option
             key={option.drink.displayName}
-            onClick={() => onChoice(player, option)}
+            onClick={() => onChoice(player, i)}
             name={option.drink.displayName}
           />)
         )
