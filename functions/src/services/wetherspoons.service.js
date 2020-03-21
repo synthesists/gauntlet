@@ -2,7 +2,8 @@ const requestPromise = require('request-promise');
 
 const getVenues = () => requestPromise('https://static.wsstack.nn4maws.net/v1/venues/en_gb/venues.json', { json: true });
 
-const flatten = (arrays) => [].concat.apply([], arrays);
+// const flatten = (arrays) => [].concat.apply([], arrays);
+const flatten = (arrays) => [].concat(...arrays);
 
 const getDrinks = async (venueId) => {
   const drinksCategoriesToAvoid = ['Hot drinks', 'Soft drinks', 'Low & alcohol free', 'Includes a drink'];

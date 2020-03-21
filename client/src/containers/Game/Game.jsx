@@ -1,65 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import Option from '../../components/Option/Option';
+import cloneDeep from 'lodash/cloneDeep';
+import SetupGame from './SetupGame';
+import PlayerChoice from './PlayerChoice';
 import { getTree } from '../../utils/apiRequests';
 
-const playersData = [];
+const GAME_STATES = {
+  SETUP: 'SETUP',
+  PLAYER_CHOICE: 'PLAYER_CHOICE',
+  PARTY: 'PARTY',
+  TREE: 'TREE',
+  END: 'END',
+}
 
-const playerColours = [
-  'navy',
-  'red',
-  'cadetBlue',
-  'blueViolet',
-  'darkGreen',
-]
-
-export default ({ playerNames, numberOfRounds }) => {
-  const [currentPlayer, setCurrentPlayer] = useState(0);
-  const [round, setRound] = useState(0);
+const Game = ({ venue }) => {
+  const [gameState, setGameState] = useState(GAME_STATES.SETUP);
   const [tree, setTree] = useState();
+  const [numberOfRounds, setNumberOfRounds] = useState(1);
+  const [players, setPlayers] = useState([]);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [currentRound, setCurrentRound] = useState(0);
 
-  useEffect(() => {
-    playerNames.forEach(name => {
-      playersData.push({ name, currentNode: 'start', nodeHistory: [], drinkHistory: [] });
-    });
-    const foo = async () => {
-      const { data } = await getTree(parseInt(numberOfRounds), 670);
-      console.log(data)
-      setTree(data)
-    }
-    foo();
-  }, [numberOfRounds, playerNames]);
-
-  const handleClick = () => {
-    if (currentPlayer === playersData.length - 1) {
-      setCurrentPlayer(0);
-      setRound(round + 1);
-    } else {
-      setCurrentPlayer(currentPlayer + 1);
-    }
+  const getTreeFromServer = async (numRounds) => {
+    const { data } = await getTree(numRounds, venue.id);
+    console.log(data)
+    setTree(data)
+  }
+    
+  const onStart = async(chosenPlayers, chosenNumberOfRounds) => {
+    await getTreeFromServer(chosenNumberOfRounds);
+    setPlayers(chosenPlayers);
+    setNumberOfRounds(chosenNumberOfRounds);
+    setGameState(GAME_STATES.PLAYER_CHOICE);
+  };
+  
+  if (currentRound >= numberOfRounds && gameState !== GAME_STATES.END) {
+    setGameState(GAME_STATES.END);
+  }
+  
+  switch (gameState) {
+    case GAME_STATES.SETUP:
+      return <SetupGame onStart={onStart}/>  
+    case GAME_STATES.PLAYER_CHOICE:
+      const currentPlayer = players[currentPlayerIndex];
+      const currentNode = currentPlayer.nodesVisited[currentPlayer.nodesVisited.length - 1];
+      const currentChildren = tree[currentNode].children;
+      const options = currentChildren.map(child => tree[child]);
+      
+      const onPlayerChoice = (player, optionIndex) => {
+        const nodeVisited = currentChildren[optionIndex];
+        console.log('nodeVisited');
+        console.log(nodeVisited);
+        const newPlayers = cloneDeep(players);
+        const newPlayer = newPlayers[currentPlayerIndex];
+        newPlayer.nodesVisited.push(nodeVisited);
+        setPlayers(newPlayers);
+        if (currentPlayerIndex === players.length - 1) {
+          setCurrentPlayerIndex(0);
+          setCurrentRound(currentRound + 1);
+        } else {
+          setCurrentPlayerIndex(currentPlayerIndex + 1);
+        }
+      };
+      
+      return <PlayerChoice
+        player={currentPlayer}
+        currentRound={currentRound}
+        numberOfRounds={numberOfRounds}
+        options={options}
+        onChoice={onPlayerChoice}
+      />
+    case GAME_STATES.END:
+      return (<h1>FINISHED</h1>  )
+    default:
+      break;
   }
 
-  if (round >= numberOfRounds) return <h1>FINISHED</h1>
+  return null;
+}
 
-  if (tree) console.log(tree['0-0']);
-
-  const playerColour = playerColours[currentPlayer];
-
-  return (
-    <div style={{color: playerColour}}>
-      <h1>{`Round: ${round+1} / ${numberOfRounds}`}</h1>
-      <h1>{`${playerNames[currentPlayer]}'s turn`}</h1>
-      <h1>{`Options: `}</h1>
-      { tree
-        ? tree[playersData[currentPlayer].currentNode].children.map((child, i) => <Option
-          handlePress={() => {
-            playersData[currentPlayer].currentNode = child
-            handleClick();
-          }}
-          name={tree[child].drink.displayName} />
-        )
-        : null
-      }
-    </div>
-  )
-
-};
+export default Game;
