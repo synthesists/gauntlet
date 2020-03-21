@@ -13,17 +13,21 @@ const getDrinks = async (venueId) => {
     )
       .map(({ products }) => products),
   );
+  console.log(drinks)
   return drinks;
 };
 
-const getRandomDrink = async (venueId) => {
-  const drinks = await getDrinks(venueId);
-  return drinks[Math.floor(Math.random() * drinks.length)];
+const getDrink = (drinks, roundOn, rounds) => {
+    const drink = drinks[Math.floor(Math.random() * drinks.length)];
+    return drink
 };
+
+
+
 
 
 module.exports = {
   getVenues,
   getDrinks,
-  getRandomDrink,
+  getDrink
 };

@@ -1,4 +1,4 @@
-const { getDrinks, getRandomDrink } = require('./wetherspoons.service');
+const { getDrinks, getDrink } = require('./wetherspoons.service');
 
 const toString = ({ x, y }) => `${y}-${x}`;
 const getChildren1 = ({ x, y }) => [{ x, y: y + 1 }, { x: x + 1, y: y + 1 }];
@@ -7,13 +7,6 @@ const getWidth = (r, rounds) => (isHalfWay(r, rounds) ? 2 + rounds - r : 3 + r);
 const getChildren2 = ({ x, y }, rounds) => {
   const newWidth = getWidth(y + 1, rounds);
   return [{ x: (x + newWidth - 1) % newWidth, y: y + 1 }, { x: x % newWidth, y: y + 1 }];
-};
-
-const process = async (obj, r, rounds, venueId) => {
-  const children = isHalfWay(r, rounds) ? getChildren2(obj, rounds) : getChildren1(obj);
-  const drink = await getRandomDrink(venueId);
-
-  return { children, drink, obj };
 };
 
 const tree = async (rounds, venueId) => {
@@ -30,7 +23,7 @@ const tree = async (rounds, venueId) => {
       const children = isHalfWay(r, rounds) ? getChildren2(node, rounds) : getChildren1(node);
       nextRow = nextRow.concat(children);
 
-      const drink = allDrinks[Math.floor(Math.random() * allDrinks.length)];
+      const drink = getDrink(allDrinks);
       treesObj[toString(node)] = {
         children: children.map((child) => toString(child)),
         drink,
@@ -42,7 +35,7 @@ const tree = async (rounds, venueId) => {
   for (let x = 0; x < 3; x++) {
     treesObj[toString({ x, y: rounds - 1 })] = {
       children: ['end'],
-      drink: allDrinks[Math.floor(Math.random() * allDrinks.length)],
+      drink: getDrink(allDrinks),
     };
   }
   return treesObj;
