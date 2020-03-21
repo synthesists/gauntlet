@@ -3,7 +3,7 @@ import Button from '../../../elements/Button/Button';
 import PlayerRow from '../../../components/PlayerRow';
 
 export default ({ players, tree, currentRound, numberOfRounds, onFinishRound }) => {
-  const playerRows = players.map((player, i) => <PlayerRow player={player} tree={tree}/>);
+  const playerRows = players.map((player, i) => <PlayerRow key={i} player={player} tree={tree}/>);
   const nextRoundButton = (
     <Button
       onClick={onFinishRound}

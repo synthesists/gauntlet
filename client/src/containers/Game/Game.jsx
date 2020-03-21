@@ -44,7 +44,7 @@ const Game = ({ venue }) => {
     if (currentRound >= numberOfRounds) {
       setGameState(GAME_STATES.END);
     } else {
-    setGameState(GAME_STATES.PLAYER_CHOICE);
+      setGameState(GAME_STATES.PLAYER_CHOICE);
     }
   };
   
