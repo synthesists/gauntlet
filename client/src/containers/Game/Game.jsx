@@ -4,6 +4,14 @@ import { getTree } from '../../utils/apiRequests';
 
 const playersData = [];
 
+const playerColours = [
+  'navy',
+  'red',
+  'cadetBlue',
+  'blueViolet',
+  'darkGreen',
+]
+
 export default ({ playerNames, numberOfRounds }) => {
   const [currentPlayer, setCurrentPlayer] = useState(0);
   const [round, setRound] = useState(0);
@@ -34,8 +42,10 @@ export default ({ playerNames, numberOfRounds }) => {
 
   if (tree) console.log(tree['0-0']);
 
+  const playerColour = playerColours[currentPlayer];
+
   return (
-    <div>
+    <div style={{color: playerColour}}>
       <h1>{`Round: ${round+1} / ${numberOfRounds}`}</h1>
       <h1>{`${playerNames[currentPlayer]}'s turn`}</h1>
       <h1>{`Options: `}</h1>
