@@ -23,7 +23,7 @@ const tree = async (rounds, venueId) => {
       const children = isHalfWay(r, rounds) ? getChildren2(node, rounds) : getChildren1(node);
       nextRow = nextRow.concat(children);
 
-      const drink = getDrink(allDrinks);
+      const drink = getDrink(allDrinks, r, rounds);
       treesObj[toString(node)] = {
         children: children.map((child) => toString(child)),
         drink,
