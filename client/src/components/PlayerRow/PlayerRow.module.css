@@ -1,0 +1,12 @@
+.PlayerRow {
+  padding: .5rem 1.5rem;
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.PlayerRowItem {
+  margin-left: 20px;
+  margin-right: 20px;
+}

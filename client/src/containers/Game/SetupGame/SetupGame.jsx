@@ -6,11 +6,11 @@ import Button from '../../../elements/Button/Button';
 import classes from './SetupGame.module.css'
 
 const PLAYER_COLOURS = [
-  'navy',
-  'red',
+  'lightSkyBlue',
+  'lightCoral',
   'cadetBlue',
-  'blueViolet',
-  'darkGreen',
+  'plum',
+  'khaki',
 ];
 let playerNames = [""];
 let numberOfRounds = 1;

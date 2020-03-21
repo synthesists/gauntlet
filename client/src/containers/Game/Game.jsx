@@ -38,10 +38,14 @@ const Game = ({ venue }) => {
     setGameState(GAME_STATES.END);
   }
 
-  const onNextRound = () => {
+  const onFinishRound = () => {
     setCurrentPlayerIndex(0);
     setCurrentRound(currentRound + 1);
+    if (currentRound >= numberOfRounds) {
+      setGameState(GAME_STATES.END);
+    } else {
     setGameState(GAME_STATES.PLAYER_CHOICE);
+    }
   };
   
   switch (gameState) {
@@ -55,8 +59,6 @@ const Game = ({ venue }) => {
       
       const onPlayerChoice = (player, optionIndex) => {
         const nodeVisited = currentChildren[optionIndex];
-        console.log('nodeVisited');
-        console.log(nodeVisited);
         const newPlayers = cloneDeep(players);
         const newPlayer = newPlayers[currentPlayerIndex];
         newPlayer.nodesVisited.push(nodeVisited);
@@ -78,9 +80,10 @@ const Game = ({ venue }) => {
     case GAME_STATES.PARTY:
       return <Party
         players={players}
+        tree={tree}
         currentRound={currentRound}
         numberOfRounds={numberOfRounds}
-        onNextRound={onNextRound}
+        onFinishRound={onFinishRound}
       />;
     case GAME_STATES.END:
       return (<h1>FINISHED</h1>);
