@@ -30,7 +30,7 @@ export default ({ onStart }) => {
   fillPlayerNames(numberOfPlayers);
 
   const onChangeNumRounds = (e) => {
-    numberOfRounds = e.target.value;
+    numberOfRounds = parseInt(e.target.value, 10);
   }
 
   const onChangeNumPlayers = (e) => {
@@ -51,13 +51,13 @@ export default ({ onStart }) => {
   }
 
   const playerRow = (i) => (
-    <InputField 
+    <InputField
       key={i}
       handleChange={(e) => onChangePlayerName(e, i)}
       label={`Player ${i+1}: `}
     />
   )
-  
+
   const playerRows = playerNames.map((_, i) => playerRow(i));
 
   return(
