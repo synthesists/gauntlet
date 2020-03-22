@@ -2,7 +2,6 @@ const requestPromise = require('request-promise');
 
 const getVenues = () => requestPromise('https://static.wsstack.nn4maws.net/v1/venues/en_gb/venues.json', { json: true });
 
-// const flatten = (arrays) => [].concat.apply([], arrays);
 const flatten = (arrays) => [].concat(...arrays);
 
 const getDrinks = async (venueId) => {
@@ -19,7 +18,7 @@ const getDrinks = async (venueId) => {
   return drinks;
 };
 
-const getDrink = (drinks, roundOn, rounds) => {
+const getDrink = (drinks) => {
   const drink = drinks[Math.floor(Math.random() * drinks.length)];
   return drink;
 };
