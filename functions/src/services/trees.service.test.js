@@ -55,5 +55,19 @@ test('tree of depth 5', () => {
   });
 });
 
+test('tree of depth 3 (given as a string)', () => {
+  expect(getTree('3', getDrink)).toStrictEqual({
+    start: { children: ['0-0', '0-1', '0-2'] },
+    '0-0': { children: ['1-0', '1-1'], drink: 'drink' },
+    '0-1': { children: ['1-1', '1-2'], drink: 'drink' },
+    '0-2': { children: ['1-2', '1-3'], drink: 'drink' },
+    '1-0': { children: ['2-2', '2-0'], drink: 'drink' },
+    '1-1': { children: ['2-0', '2-1'], drink: 'drink' },
+    '1-2': { children: ['2-1', '2-2'], drink: 'drink' },
+    '1-3': { children: ['2-2', '2-0'], drink: 'drink' },
+    '2-0': { children: ['end'], drink: 'drink' },
+    '2-1': { children: ['end'], drink: 'drink' },
+    '2-2': { children: ['end'], drink: 'drink' },
+    end: { children: [] },
   });
 });

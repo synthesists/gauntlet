@@ -20,7 +20,8 @@ const getConvergingChildren = ({ x, y }, rounds) => {
   ];
 };
 
-const getTree = (rounds, getDrink) => {
+const getTree = (roundsArg, getDrink) => {
+  const rounds = parseInt(roundsArg, 10);
   let currentRow = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }];
   const tree = {
     start: { children: currentRow.map((child) => toString(child)) },
