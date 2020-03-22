@@ -1,14 +1,18 @@
 const treesService = require('../services/trees.service');
+const {
+  getDrinks,
+  getDrink,
+} = require('../services/wetherspoons.service');
 
 const getTree = async (req, res) => {
   try {
     const { rounds } = req.body;
     const { venueId } = req.body;
-    const tree = await treesService.tree(rounds, venueId);
+    const drinks = await getDrinks(venueId);
+    const tree = treesService.getTree(rounds, () => getDrink(drinks));
     res.status(200).send(tree);
   } catch (err) {
     console.log(err);
-
     res.send(err.message);
   }
 };
