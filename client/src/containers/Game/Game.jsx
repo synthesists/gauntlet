@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import SetupGame from './SetupGame';
 import PlayerChoice from './PlayerChoice';
@@ -26,14 +26,14 @@ const Game = ({ venue }) => {
     console.log(data)
     setTree(data)
   }
-    
+
   const onStart = async(chosenPlayers, chosenNumberOfRounds) => {
     await getTreeFromServer(chosenNumberOfRounds);
     setPlayers(chosenPlayers);
     setNumberOfRounds(chosenNumberOfRounds);
     setGameState(GAME_STATES.PLAYER_CHOICE);
   };
-  
+
   if (currentRound >= numberOfRounds && gameState !== GAME_STATES.END) {
     setGameState(GAME_STATES.END);
   }
@@ -47,18 +47,18 @@ const Game = ({ venue }) => {
       setGameState(GAME_STATES.PLAYER_CHOICE);
     }
   };
-  
+
   switch (gameState) {
     case GAME_STATES.SETUP:
-      return <SetupGame onStart={onStart}/>  
+      return <SetupGame onStart={onStart}/>
     case GAME_STATES.PLAYER_CHOICE:
       const currentPlayer = players[currentPlayerIndex];
       const currentNode = currentPlayer.nodesVisited[currentPlayer.nodesVisited.length - 1];
       const currentChildren = tree[currentNode].children;
-      const options = currentChildren.map(child => tree[child]);
-      
-      const onPlayerChoice = (player, optionIndex) => {
-        const nodeVisited = currentChildren[optionIndex];
+      const options = currentChildren.map(child => tree[child].drink);
+
+      const onPlayerChoice = (indexOfChosenOption) => {
+        const nodeVisited = currentChildren[indexOfChosenOption];
         const newPlayers = cloneDeep(players);
         const newPlayer = newPlayers[currentPlayerIndex];
         newPlayer.nodesVisited.push(nodeVisited);
@@ -69,7 +69,7 @@ const Game = ({ venue }) => {
           setCurrentPlayerIndex(currentPlayerIndex + 1);
         }
       };
-      
+
       return <PlayerChoice
         player={currentPlayer}
         currentRound={currentRound}

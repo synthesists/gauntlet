@@ -9,4 +9,4 @@ export default ({ name, onClick }) => (
       <h1>{name}</h1>
     </Card>
   </div>
-); 
+);

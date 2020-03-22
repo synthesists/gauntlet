@@ -16,15 +16,15 @@ export default ({ player, tree }) => {
   );
 
   const totalCost = sum(previousDrinks.map(drink => drink.priceValue)).toFixed(2);
-  
+
   return(
-    <div 
+    <div
       className={PlayerRow}
       style={{ background: player.colour }}
     >
     <div className={PlayerRowItem}>{player.name}</div>
-    <div>{previousDrinkNames}</div>
+    {previousDrinkNames}
     <div className={PlayerRowItem}>{`£${totalCost}`}</div>
     </div>
-  ); 
+  );
 }
