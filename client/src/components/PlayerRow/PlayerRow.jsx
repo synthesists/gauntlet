@@ -1,30 +1,41 @@
 import React from 'react';
 
 import {
+  PlayerName,
   PlayerRow,
-  PlayerRowItem,
+  DrinkSummary,
+  DrinkInfo,
+  Circle,
 } from './PlayerRow.module.css';
-
-const sum = (array) => array.reduce((a, b) => a + b, 0);
 
 export default ({ player, tree }) => {
   const { nodesVisited } = player;
-  const drinkNodesVisited = nodesVisited.slice(1);
-  const previousDrinks = drinkNodesVisited.map(node => tree[node].drink);
-  const previousDrinkNames = previousDrinks.map(
-    (drink, i) => <div key={i} className={PlayerRowItem}>{drink.displayName}</div>
+  const lastNodeVisited = nodesVisited[nodesVisited.length - 1];
+  const currentDrink = tree[lastNodeVisited].drink;
+  const playerName = (<h2 className={PlayerName}>{player.name}</h2>);
+  const currentDrinkLabel = (<div className={Circle}>{currentDrink.displayName}</div>);
+  const currentDrinkName = (<b>{currentDrink.displayName}</b>);
+  const currentDrinkType = (<div>{currentDrink.displayPrice}</div>);
+  const currentDrinkInfo = (
+    <div className={DrinkInfo}>
+      {currentDrinkName}
+      {currentDrinkType}
+    </div>
   );
-
-  const totalCost = sum(previousDrinks.map(drink => drink.priceValue)).toFixed(2);
+  const currentDrinkSummary = (
+    <div className={DrinkSummary}>
+      {currentDrinkLabel}
+      {currentDrinkInfo}
+    </div>
+  );
 
   return(
     <div
       className={PlayerRow}
       style={{ background: player.colour }}
     >
-    <div className={PlayerRowItem}>{player.name}</div>
-    {previousDrinkNames}
-    <div className={PlayerRowItem}>{`£${totalCost}`}</div>
+      {playerName}
+      {currentDrinkSummary}
     </div>
   );
 }

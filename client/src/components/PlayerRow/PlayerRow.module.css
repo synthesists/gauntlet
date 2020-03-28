@@ -1,12 +1,35 @@
-.PlayerRow {
-  padding: .5rem 1.5rem;
-  min-height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+.PlayerName {
+  width: 20vw;
+  text-align: left;
 }
 
-.PlayerRowItem {
-  margin-left: 20px;
-  margin-right: 20px;
+.PlayerRow {
+  padding: .5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.DrinkSummary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.DrinkInfo {
+  margin: 0 1vw;
+  text-align: left;
+}
+
+
+.Circle {
+  display: inline-block;
+  height: 10vh;
+  width: 10vh;
+  border-radius: 50%;
+  margin: 0 .5rem;
+  background-color: lightgray;
+  text-align: center;
+  font-size: 2vh;
+  border: 1px solid black;
 }

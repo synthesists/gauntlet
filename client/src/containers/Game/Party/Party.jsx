@@ -6,7 +6,16 @@ import {
 } from './Party.module.css';
 
 export default ({ players, tree, currentRound, numberOfRounds, onFinishRound }) => {
-  const playerRows = players.map((player, i) => <PlayerRow key={i} player={player} tree={tree}/>);
+  const currentRoundTitle = (
+    <h1>{`Round ${currentRound+1} of ${numberOfRounds}`}</h1>
+  );
+  const playerRows = (
+    <div>
+      {players.map(
+        (player, i) => (<PlayerRow key={i} player={player} tree={tree}/>)
+      )}
+    </div>
+  );
   const nextRoundButton = (
     <Button
       onClick={onFinishRound}
@@ -16,9 +25,8 @@ export default ({ players, tree, currentRound, numberOfRounds, onFinishRound }) 
   );
 
   return (
-    <div>
-      <h1 className={view}>{`Round ${currentRound+1} of ${numberOfRounds}`}</h1>
-      <h2 className={view}>{'Time'}</h2>
+    <div className={view}>
+      {currentRoundTitle}
       {playerRows}
       {nextRoundButton}
     </div>
