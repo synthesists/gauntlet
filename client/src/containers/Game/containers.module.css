@@ -1,0 +1,8 @@
+.view {
+    text-align: center;
+    height: 96vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    padding: 2vh 0;
+}
