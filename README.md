@@ -53,10 +53,6 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 
 Give a ⭐️ if this project helped you!
 
-## 📝 License
-
-Copyright © 2020 [Craig Forrest (https://github.com/CForrest97), Matthew Emerson (https://github.com/mattemerson1)](https://github.com/synthesists).<br />
-
 ---
 
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
