@@ -12,6 +12,9 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
+console.log('HELLLO MATT');
+
+
 app.use('/v1', routes);
 
 if (process.env.REACT_APP_SERVER_LOCATION === 'local') {
