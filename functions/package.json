@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "start:dev": "nodemon src/app.js",
+    "start:debug": "REACT_APP_SERVER_LOCATION=local  node --inspect src/app.js",
     "test": "jest --watch"
   },
   "author": "",
