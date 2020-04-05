@@ -21,7 +21,7 @@ export default ({ player, tree }) => {
   const drinkNodesVisited = nodesVisited.slice(1);
   const drinks = drinkNodesVisited.map(node => tree[node].drink);
   const currentDrink = drinks[drinks.length - 1];
-  const currentDrinkLabel = (<Circle content={currentDrink}/>);
+  const currentDrinkLabel = (<Circle name={currentDrink.displayName} imageUrl={currentDrink.imageUrl}/>);
   const currentDrinkInfo = (
     <div className={DrinkInfo}>
       <b>{currentDrink.displayName}</b>
@@ -39,7 +39,7 @@ export default ({ player, tree }) => {
       {drinks.map(
         (drink, i) => {
           if (i < drinkNodesVisited.length - 1) {
-            return <Circle key={i} content={drink}/>
+            return <Circle key={i} name={drink.name} imageUrl={drink.imageUrl}/>
           }
           return currentDrinkSummary(i);
         }

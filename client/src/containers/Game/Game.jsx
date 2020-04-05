@@ -24,6 +24,7 @@ const Game = ({ venue }) => {
 
   const getTreeFromServer = async (numRounds) => {
     const { data } = await getTree(numRounds, venue.id);
+    console.log('[getTreeFromServer] data')
     console.log(data)
     setTree(data)
   }

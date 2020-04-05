@@ -17,7 +17,7 @@ export default ({ player, tree }) => {
   const drinkLables = (
     <div className={DrinksRow}>
       {drinks.map(
-        (drink, i) => (<Circle key={i} content={drink}/>)
+        (drink, i) => (<Circle key={i} name={drink.displayName} imageUrl={drink.imageUrl}/>)
       )}
     </div>
   );
