@@ -62,6 +62,7 @@ export default ({ onStart }) => {
 
   return(
     <main className={classes.Main}>
+      <h1>Set Up Gauntlet</h1>
       <Dropdown
         id='rounds'
         onChange={onChangeNumRounds}
