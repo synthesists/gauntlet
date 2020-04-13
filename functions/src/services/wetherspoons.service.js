@@ -26,49 +26,47 @@ const lastRoundDrinks = [
 ];
 
 const getDrinkValue = (drinkCategory) => {
-  let drinkValue;
   if (firstRoundDrinks.includes(drinkCategory)) {
-    drinkValue = 0;
-  } else if (lastRoundDrinks.includes(drinkCategory)) {
-    drinkValue = 1;
-  } else {
-    drinkValue = (Math.floor((Math.random() * 100)) / 100);
+    return 0;
+  } if (lastRoundDrinks.includes(drinkCategory)) {
+    return 1;
   }
-  return drinkValue;
+  return Math.random();
+};
+
+const subMenuProcessor = (subMenu) => {
+  const drinkCategory = `${subMenu.headerText}`;
+  const drinksInCategory = flatten(
+    flatten(subMenu.productGroups)
+      .map(({ products }) => products),
+  )
+    .map((products) => {
+      products.drinkCategory = drinkCategory;
+      products.drinkValue = getDrinkValue(drinkCategory);
+      return products;
+    });
+  return drinksInCategory;
 };
 
 const processDrinksResponse = (response) => {
-  const drinksMenu = response.menus.find((element) => element.name === 'Drinks');
+  const drinksMenu = response.menus.find(({ name }) => name === 'Drinks');
   const drinksSubMenus = drinksMenu.subMenu;
-  const drinksFilter = drinksSubMenus
+  const validDrinks = drinksSubMenus
     .filter((subMenu) => !drinksCategoriesToAvoid.includes(subMenu.headerText));
-  let drinks = [];
-  drinksFilter.forEach((subMenu) => {
-    const drinkCategory = `${subMenu.headerText}`;
-    const drinksInCategory = flatten(
-      flatten(subMenu.productGroups)
-        .map(({ products }) => products),
-    );
-    drinksInCategory.forEach((products) => {
-      products.drinkCategory = drinkCategory;
-      products.drinkValue = getDrinkValue(drinkCategory);
-    });
-    drinks = drinks.concat(drinksInCategory);
-  });
-  return {
-    drinks,
-  };
+  // eslint-disable-next-line max-len
+  const drinks = validDrinks.reduce((accumulator, subMenu) => accumulator.concat(subMenuProcessor(subMenu)), []);
+  return { drinks };
 };
 
 const getDrinks = async (venueId) => {
   const response = await requestPromise(`https://static.wsstack.nn4maws.net/content/v1/menus/${venueId}.json`, { json: true });
-  const drinksObj = processDrinksResponse(response);
-  return drinksObj.drinks;
+  const { drinks } = processDrinksResponse(response);
+  return drinks;
 };
 
-const getDrink = (drinks, roundValue, offset = 0) => {
+const getDrink = (drinks, NodeValue, offset) => {
   const sortedDrinks = drinks.sort(
-    (a, b) => Math.abs(a.drinkValue - roundValue) - Math.abs(b.drinkValue - roundValue),
+    (a, b) => Math.abs(a.drinkValue - NodeValue) - Math.abs(b.drinkValue - NodeValue),
   );
   return sortedDrinks[offset];
 };
@@ -79,4 +77,3 @@ module.exports = {
   getDrink,
   processDrinksResponse,
 };
-

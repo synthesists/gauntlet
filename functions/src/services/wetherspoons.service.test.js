@@ -108,22 +108,20 @@ test('processDrinksResponse(response)', () => {
   });
 });
 
-test('getDrink with roundValue of 0.75, 3 nodes)', () => {
+test('getDrink with NodeValue of 0.75, 3 nodes)', () => {
   for (let x = 0; x < 3; x++) {
     expect(getDrink(drinks, 0.75, x)).toStrictEqual({
       ...expectedCocktail[x],
     });
-    console.log(expectedCocktail[x]);
   }
 });
 
-test('getDrink with roundValue of 0.25, 5 nodes)', () => {
+test('getDrink with NodeValue of 0.25, 5 nodes)', () => {
   const concatArray = expectedDraughtCraft.concat(expectedCider);
   for (let x = 0; x < 5; x++) {
     expect(getDrink(drinks, 0.25, x)).toStrictEqual({
       ...concatArray[x],
     });
-    console.log(concatArray[x]);
   }
 });
 

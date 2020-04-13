@@ -7,17 +7,13 @@ const isHalfWay = (r, rounds) => r >= (rounds + 1) / 2;
 const getWidth = (r, rounds) => (isHalfWay(r, rounds) ? 2 + rounds - r : 3 + r);
 
 
-const getRoundValue = (r, rounds) => {
-  let roundValue;
+const getNodeValue = (r, rounds) => {
   if (r === 1) {
-    roundValue = 0;
-  } else if (r === rounds) {
-    roundValue = 1;
-  } else {
-    roundValue = ((r - 1) * (1 / (rounds - 1)));
+    return 0;
   }
-  return roundValue;
+  return ((r - 1) / (rounds - 1));
 };
+
 
 const getConvergingChildren = ({ x, y }, rounds) => {
   const newWidth = getWidth(y + 1, rounds);
@@ -53,8 +49,8 @@ const getTree = (roundsArg, getDrink) => {
 
       tree[toString(node)] = {
         children: children.map((child) => toString(child)),
-        drink: getDrink(getRoundValue(r, rounds), index),
-        roundValue: getRoundValue(r, rounds),
+        drink: getDrink(getNodeValue(r, rounds), index),
+        NodeValue: getNodeValue(r, rounds),
       };
     });
     currentRow = nextRow;
@@ -63,8 +59,8 @@ const getTree = (roundsArg, getDrink) => {
   for (let x = 0; x < 3; x++) {
     tree[toString({ x, y: rounds - 1 })] = {
       children: ['end'],
-      drink: getDrink(getRoundValue(rounds, rounds), x),
-      roundValue: getRoundValue(rounds, rounds),
+      drink: getDrink(getNodeValue(rounds, rounds), x),
+      NodeValue: getNodeValue(rounds, rounds),
     };
   }
   return tree;
