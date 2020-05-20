@@ -12,12 +12,12 @@ const PLAYER_COLOURS = [
   'plum',
   'khaki',
 ];
-let playerNames = [""];
+let playerNames = [''];
 let numberOfRounds = 1;
 
 const fillPlayerNames = (numberOfPlayers) => {
   while (playerNames.length < numberOfPlayers) {
-    playerNames.push("");
+    playerNames.push('');
   }
   while (playerNames.length > numberOfPlayers) {
     playerNames.pop();
@@ -54,7 +54,7 @@ export default ({ onStart }) => {
     <InputField
       key={i}
       handleChange={(e) => onChangePlayerName(e, i)}
-      label={`Player ${i+1}: `}
+      label={`Player ${i+1}:`}
     />
   )
 
@@ -62,22 +62,23 @@ export default ({ onStart }) => {
 
   return(
     <main className={classes.Main}>
+      <h1>Set Up Gauntlet</h1>
       <Dropdown
-        id="rounds"
+        id='rounds'
         onChange={onChangeNumRounds}
-        label="Number of rounds: "
+        label='Number of Rounds:'
         options={[1, 3, 5, 7, 9]}
       />
       <Dropdown
-        id="players"
+        id='players'
         onChange={onChangeNumPlayers}
-        label="Number of Players: "
+        label='Number of Players:'
         options={[1, 2, 3, 4, 5]}
       />
       {playerRows}
       <Button
         onClick={onClickStart}
-        name="submit">
+        name='submit'>
         <h1>Submit</h1>
       </Button>
     </main>

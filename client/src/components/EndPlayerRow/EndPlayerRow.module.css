@@ -10,16 +10,4 @@
     display: flex;
     overflow-x: scroll;
     scrollbar-width: none;
-    align-items: center;
-}
-
-.DrinkSummary {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.DrinkInfo {
-    margin: 0 1vw;
-    text-align: left;
 }

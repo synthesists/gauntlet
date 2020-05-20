@@ -1,12 +1,23 @@
 import React from 'react';
-import Button from '../../../elements/Button/Button';
+import { ScrollSync } from 'react-scroll-sync';
+import Button from '../../../elements/Button';
+import Title from '../../../elements/Title';
 import PlayerRow from '../../../components/PlayerRow';
-import {
-  view,
-} from './Party.module.css';
+import { view } from '../containers.module.css';
 
 export default ({ players, tree, currentRound, numberOfRounds, onFinishRound }) => {
-  const playerRows = players.map((player, i) => <PlayerRow key={i} player={player} tree={tree}/>);
+  const currentRoundTitle = (
+    <Title title={`Round ${currentRound+1} of ${numberOfRounds}`}/>
+  );
+  const playerRows = (
+    <ScrollSync>
+      <div>
+        {players.map(
+          (player, i) => (<PlayerRow key={i} player={player} tree={tree}/>)
+        )}
+      </div>
+    </ScrollSync>
+  );
   const nextRoundButton = (
     <Button
       onClick={onFinishRound}
@@ -16,9 +27,8 @@ export default ({ players, tree, currentRound, numberOfRounds, onFinishRound }) 
   );
 
   return (
-    <div>
-      <h1 className={view}>{`Round ${currentRound+1} of ${numberOfRounds}`}</h1>
-      <h2 className={view}>{'Time'}</h2>
+    <div className={view}>
+      {currentRoundTitle}
       {playerRows}
       {nextRoundButton}
     </div>

@@ -1,11 +1,9 @@
 .Main {
-  position: relative;
-  width: 100%;
-  max-width: 280px;
-  margin: 3rem auto;
-}
-@media only screen and (min-width:600px) {
-  .Main {
-      height: 460px;
-  }
+  text-align: center;
+  height: 80vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  padding: 2vh 0;
+  margin:10vw
 }

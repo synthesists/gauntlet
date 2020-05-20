@@ -1,30 +1,64 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { ScrollSyncPane } from 'react-scroll-sync';
 
+import { scrollToRef } from '../../utils/scroll.util';
+import PlayerName from '../../elements/PlayerName';
+import Circle from '../Circle';
 import {
   PlayerRow,
-  PlayerRowItem,
+  DrinkSummary,
+  DrinkInfo,
+  DrinksRow
 } from './PlayerRow.module.css';
 
-const sum = (array) => array.reduce((a, b) => a + b, 0);
-
 export default ({ player, tree }) => {
+  const drinksRowEndRef = useRef(null);
+  useEffect(() => scrollToRef(drinksRowEndRef), [player]);
+
+  const playerName = <PlayerName name={player.name}/>;
+
   const { nodesVisited } = player;
   const drinkNodesVisited = nodesVisited.slice(1);
-  const previousDrinks = drinkNodesVisited.map(node => tree[node].drink);
-  const previousDrinkNames = previousDrinks.map(
-    (drink, i) => <div key={i} className={PlayerRowItem}>{drink.displayName}</div>
+  const drinks = drinkNodesVisited.map(node => tree[node].drink);
+  const currentDrink = drinks[drinks.length - 1];
+  const currentDrinkLabel = (<Circle name={currentDrink.displayName} imageUrl={currentDrink.imageUrl}/>);
+  const currentDrinkInfo = (
+    <div className={DrinkInfo}>
+      <b>{currentDrink.displayName}</b>
+      <div>{currentDrink.displayPrice}</div>
+    </div>
   );
-
-  const totalCost = sum(previousDrinks.map(drink => drink.priceValue)).toFixed(2);
+  const currentDrinkSummary = (key) => (
+    <div key={key} ref={drinksRowEndRef} className={DrinkSummary}>
+      {currentDrinkLabel}
+      {currentDrinkInfo}
+    </div>
+  );
+  const drinkLables = (
+    <div className={DrinksRow}>
+      {drinks.map(
+        (drink, i) => {
+          if (i < drinkNodesVisited.length - 1) {
+            return <Circle key={i} name={drink.name} imageUrl={drink.imageUrl}/>
+          }
+          return currentDrinkSummary(i);
+        }
+      )}
+    </div>
+  );
+  const scrollBar = (
+    <ScrollSyncPane group="playerRowScrollBar">
+     {drinkLables}
+    </ScrollSyncPane>
+  );
 
   return(
     <div
       className={PlayerRow}
       style={{ background: player.colour }}
     >
-    <div className={PlayerRowItem}>{player.name}</div>
-    {previousDrinkNames}
-    <div className={PlayerRowItem}>{`£${totalCost}`}</div>
+      {playerName}
+      {scrollBar}
     </div>
   );
 }

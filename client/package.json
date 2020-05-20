@@ -10,7 +10,10 @@
     "loadsh": "0.0.4",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0"
+    "react-image": "^2.4.0",
+    "react-scripts": "3.4.0",
+    "react-scroll-sync": "^0.7.1",
+    "react-visibility-sensor": "^5.1.1"
   },
   "scripts": {
     "start": "PORT=4001 react-scripts start",

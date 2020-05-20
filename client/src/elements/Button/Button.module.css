@@ -2,9 +2,9 @@
   background-color: rgb(56, 53, 255);
   border-color: #ffffff;
   color: #ffffff;
-  padding-left: 100px;
-  padding-right: 100px;
-  margin: 10px;
+  padding-left: 10vh;
+  padding-right: 10vh;
+  margin: 2vw;
   border-radius: 25px;
 }
 .ButtonWrapper h1 {

@@ -3,6 +3,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import SetupGame from './SetupGame';
 import PlayerChoice from './PlayerChoice';
 import Party from './Party';
+import EndParty from './EndParty';
 import { getTree } from '../../utils/apiRequests';
 
 const GAME_STATES = {
@@ -23,6 +24,7 @@ const Game = ({ venue }) => {
 
   const getTreeFromServer = async (numRounds) => {
     const { data } = await getTree(numRounds, venue.id);
+    console.log('[getTreeFromServer] data')
     console.log(data)
     setTree(data)
   }
@@ -86,7 +88,11 @@ const Game = ({ venue }) => {
         onFinishRound={onFinishRound}
       />;
     case GAME_STATES.END:
-      return (<h1>FINISHED</h1>);
+      return <EndParty
+        players={players}
+        tree={tree}
+        numberOfRounds={numberOfRounds}
+      />;
     default:
       break;
   }
