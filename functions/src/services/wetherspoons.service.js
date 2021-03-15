@@ -9,6 +9,8 @@ const drinksCategoriesToAvoid = [
   'Soft drinks',
   'Low & alcohol free',
   'Includes a drink',
+  'Any 2 for £5',
+  'Any 3 for £5',
 ];
 
 const firstRoundDrinks = [
@@ -20,10 +22,39 @@ const firstRoundDrinks = [
 
 const lastRoundDrinks = [
   'Cocktails',
-  'Any 3 for £5',
+  // 'Any 3 for £5',
   'Liqueur & brandy',
   'Prosecco & sparkling',
 ];
+
+const processUnits = (drinkDescription) => {
+  const unitsRegeX = /\d+([\.]\d+)\s/;
+  const unitString = unitsRegeX.exec(drinkDescription);
+  const unitStringTrim = unitString[0].trim();
+  const units = parseFloat(unitStringTrim);
+  return units;
+};
+
+const getDrinkUnits = (drinkDescription, drinkCategory) => {
+  if (drinkCategory === 'Any 2 for £5') {
+    return (processUnits(drinkDescription) * 2);
+  }
+  if (drinkCategory === 'Any 3 for £5') {
+    return (processUnits(drinkDescription) * 3);
+  }
+  if (drinkDescription === undefined) {
+    if (drinkCategory === 'Gin') {
+      return 1;
+    }
+    if (drinkCategory === 'Wine') {
+      return 3;
+    }
+    if (drinkCategory === 'Cocktails') {
+      return 4;
+    }
+  }
+  return processUnits(drinkDescription);
+};
 
 const getDrinkValue = (drinkCategory) => {
   if (firstRoundDrinks.includes(drinkCategory)) {
@@ -43,6 +74,7 @@ const subMenuProcessor = (subMenu) => {
     .map((products) => {
       products.drinkCategory = drinkCategory;
       products.drinkValue = getDrinkValue(drinkCategory);
+      products.drinkUnits = getDrinkUnits(products.description, drinkCategory);
       return products;
     });
   return drinksInCategory;

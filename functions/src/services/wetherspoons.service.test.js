@@ -9,53 +9,106 @@ const { processDrinksResponse, getDrink } = require('./wetherspoons.service');
 //   return drinks;
 // }
 
+
 const draughtCraft = [
-  { displayName: 'Shipyard American Pale Ale' },
-  { displayName: 'Hop House 13 Lager' },
-  { displayName: 'BrewDog Punk IPA' },
+  {
+    displayName: 'Shipyard American Pale Ale',
+    description: '4.5% ABV, 2.6 units',
+  },
+  {
+    displayName: 'Hop House 13 Lager',
+    description: '5.0% ABV, 2.8 units',
+  },
+  {
+    displayName: 'BrewDog Punk IPA',
+    description: '5.4% ABV, 3.1 units',
+  },
 ];
 const cider = [
-  { displayName: 'cider1' },
-  { displayName: 'cider2' },
-  { displayName: 'cider3' },
+  {
+    displayName: 'cider1',
+    description: '4.0% ABV, 2.3 units',
+  },
+  {
+    displayName: 'cider2',
+    description: '4.0% ABV, 2.3 units',
+  },
+  {
+    displayName: 'cider3',
+    description: '4.5% ABV, 2.6 units',
+  },
 ];
 const cocktails = [
   { displayName: 'cocktail1' },
   { displayName: 'cocktail2' },
   { displayName: 'cocktail3' },
 ];
+
 const expectedDraughtCraft = [
-  { displayName: 'Shipyard American Pale Ale',
+  {
+    displayName: 'Shipyard American Pale Ale',
+    description: '4.5% ABV, 2.6 units',
     drinkCategory: 'Draught craft',
-    drinkValue: 0 },
-  { displayName: 'Hop House 13 Lager',
+    drinkValue: 0,
+    drinkUnits: 2.6,
+  },
+  {
+    displayName: 'Hop House 13 Lager',
+    description: '5.0% ABV, 2.8 units',
     drinkCategory: 'Draught craft',
-    drinkValue: 0 },
-  { displayName: 'BrewDog Punk IPA',
+    drinkValue: 0,
+    drinkUnits: 2.8,
+  },
+  {
+    displayName: 'BrewDog Punk IPA',
+    description: '5.4% ABV, 3.1 units',
     drinkCategory: 'Draught craft',
-    drinkValue: 0 },
+    drinkValue: 0,
+    drinkUnits: 3.1,
+  },
 ];
 const expectedCider = [
-  { displayName: 'cider1',
+  {
+    displayName: 'cider1',
+    description: '4.0% ABV, 2.3 units',
     drinkCategory: 'Draught & bottled cider',
-    drinkValue: 0 },
-  { displayName: 'cider2',
+    drinkValue: 0,
+    drinkUnits: 2.3,
+  },
+  {
+    displayName: 'cider2',
+    description: '4.0% ABV, 2.3 units',
     drinkCategory: 'Draught & bottled cider',
-    drinkValue: 0 },
-  { displayName: 'cider3',
+    drinkValue: 0,
+    drinkUnits: 2.3,
+  },
+  {
+    displayName: 'cider3',
+    description: '4.5% ABV, 2.6 units',
     drinkCategory: 'Draught & bottled cider',
-    drinkValue: 0 },
+    drinkValue: 0,
+    drinkUnits: 2.6,
+  },
 ];
 const expectedCocktail = [
-  { displayName: 'cocktail1',
+  {
+    displayName: 'cocktail1',
     drinkCategory: 'Cocktails',
-    drinkValue: 1 },
-  { displayName: 'cocktail2',
+    drinkValue: 1,
+    drinkUnits: 4,
+  },
+  {
+    displayName: 'cocktail2',
     drinkCategory: 'Cocktails',
-    drinkValue: 1 },
-  { displayName: 'cocktail3',
+    drinkValue: 1,
+    drinkUnits: 4,
+  },
+  {
+    displayName: 'cocktail3',
     drinkCategory: 'Cocktails',
-    drinkValue: 1 },
+    drinkValue: 1,
+    drinkUnits: 4,
+  },
 ];
 
 const response = {
@@ -95,7 +148,6 @@ const drinks = [
   ...expectedCocktail,
   ...expectedCider,
 ];
-
 
 
 test('processDrinksResponse(response)', () => {

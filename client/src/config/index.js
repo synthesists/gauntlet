@@ -13,6 +13,7 @@ const origin = origins[serverLocation];
 
 console.log(`Client expects server at origin: ${origin}`);
 
+
 module.exports = {
   origin,
 };

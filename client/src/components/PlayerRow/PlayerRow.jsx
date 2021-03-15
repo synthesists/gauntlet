@@ -17,6 +17,8 @@ export default ({ player, tree }) => {
 
   const totalCost = sum(previousDrinks.map(drink => drink.priceValue)).toFixed(2);
 
+  const totalUnits = sum(previousDrinks.map(drink => drink.drinkUnits)).toFixed(2);
+
   return(
     <div
       className={PlayerRow}
@@ -25,6 +27,7 @@ export default ({ player, tree }) => {
     <div className={PlayerRowItem}>{player.name}</div>
     {previousDrinkNames}
     <div className={PlayerRowItem}>{`£${totalCost}`}</div>
+    <div className={PlayerRowItem}>{`${totalUnits} units`}</div>
     </div>
   );
 }
